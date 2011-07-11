@@ -64,15 +64,30 @@ int main(int argc, char * argv [])
   index0.Fill( 100 );
   image->SetPixel( index0, 5 );
   PixelType pixel0 = image->GetPixel( index0 );
-  assert( pixel0 == 5 );
+  if( pixel0 != 5 )
+    {
+    std::cerr << __LINE__ << std::endl;
+    std::cerr << pixel0 << " != 5" << std::endl;
+    return EXIT_FAILURE;
+    }
   image->SetPixel( index0, value );
   pixel0 = image->GetPixel( index0 );
-  assert( pixel0 == value );
+  if( pixel0 != value )
+    {
+    std::cerr << __LINE__ << std::endl;
+    std::cerr << pixel0 << " != " << value << std::endl;
+    return EXIT_FAILURE;
+    }
 
   PixelMapImageType::IndexType index1;
   index1.Fill( 15 );
   PixelType pixel1 = image->GetPixel( index1 );
-  assert( pixel1 == value );
+  if( pixel1 != value )
+    {
+    std::cerr << __LINE__ << std::endl;
+    std::cerr << pixel1 << " != " << value << std::endl;
+    return EXIT_FAILURE;
+    }
 
   // Test using filter
   typedef itk::ShiftScaleImageFilter<PixelMapImageType, PixelMapImageType>
@@ -92,7 +107,12 @@ int main(int argc, char * argv [])
 
   while( !it1.IsAtEnd() )
     {
-    assert( it1.Get() == (value + 10) );
+    if( it1.Get() != (value + 10) )
+      {
+      std::cerr << __LINE__ << std::endl;
+      std::cerr << it1.Get() << " != " << value + 10 << std::endl;
+      return EXIT_FAILURE;
+      }
     ++it1;
     }
 
@@ -108,11 +128,21 @@ int main(int argc, char * argv [])
     PixelMapImageType::IndexType index = it.GetIndex();
     if ( index[0] >= 100 && index[1] >= 100 )
       {
-      assert( it.Get() == (value + 10) );
+      if( it.Get() != (value + 10) )
+        {
+        std::cerr << __LINE__ << std::endl;
+        std::cerr << it1.Get() << " != " << value + 10 << std::endl;
+        return EXIT_FAILURE;
+        }
       }
     else
       {
-      assert( it.Get() == 0 );
+      if( it.Get() != 0 )
+        {
+        std::cerr << __LINE__ << std::endl;
+        std::cerr << it1.Get() << " != " << 0 << std::endl;
+        return EXIT_FAILURE;
+        }
       }
     ++it;
     }
@@ -148,11 +178,21 @@ int main(int argc, char * argv [])
     PixelMapImageType::IndexType index = it.GetIndex();
     if ( index[0] >= 100 && index[1] >= 100 )
       {
-      assert( it.Get() == ((value+11) * 10) );
+      if( it.Get() != ((value+11) * 10) )
+        {
+        std::cerr << __LINE__ << std::endl;
+        std::cerr << it1.Get() << " != " << (value+11) * 10 << std::endl;
+        return EXIT_FAILURE;
+        }
       }
     else
       {
-      assert( it.Get() == 10 );
+      if( it.Get() != 10 )
+        {
+        std::cerr << __LINE__ << std::endl;
+        std::cerr << it1.Get() << " != " << 10 << std::endl;
+        return EXIT_FAILURE;
+        }
       }
     ++it;
     }
@@ -162,12 +202,22 @@ int main(int argc, char * argv [])
   PixelMapImageType::IndexType indexA;
   indexA.Fill( 100 );
   PixelType pixelA = image->GetPixel( indexA );
-  assert( pixelA == 100 );
+  if( pixelA != 100 )
+    {
+    std::cerr << __LINE__ << std::endl;
+    std::cerr << pixelA << " != " << 100 << std::endl;
+    return EXIT_FAILURE;
+    }
   PixelMapImageType::IndexType indexB;
   indexB.Fill( 10000 );
   image->SetPixel( indexB, 5 );
   PixelType pixelB = image->GetPixel( indexB );
-  assert( pixelB == 5 );
+  if( pixelB != 5 )
+    {
+    std::cerr << __LINE__ << std::endl;
+    std::cerr << pixelA << " != " << 100 << std::endl;
+    return EXIT_FAILURE;
+    }
 
   return EXIT_SUCCESS;
 }
