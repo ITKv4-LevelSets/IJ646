@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: SparseImageTest01.cxx,v $
+  Module:    $RCSfile: PixelMapImageTest01.cxx,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -22,7 +22,7 @@
 #include <sstream>
 
 #include "itkImage.h"
-#include "itkSparseImage.h"
+#include "itkPixelMapImage.h"
 #include "itkImageRegionIterator.h"
 #include "itkNeighborhoodIterator.h"
 #include "itkShiftScaleImageFilter.h"
@@ -32,35 +32,35 @@ int main(int argc, char * argv [])
   // Typedefs
   const unsigned int Dimension = 2;
   typedef unsigned short PixelType;
-  typedef itk::SparseImage< PixelType, Dimension > SparseImageType;
+  typedef itk::PixelMapImage< PixelType, Dimension > PixelMapImageType;
   typedef itk::Image< PixelType, Dimension > ContiguousImageType;
-  typedef itk::ImageRegionIterator< SparseImageType > SparseIteratorType;
+  typedef itk::ImageRegionIterator< PixelMapImageType > SparseIteratorType;
   typedef itk::ImageRegionIterator< ContiguousImageType > ContiguousIteratorType;
-  typedef itk::NeighborhoodIterator< SparseImageType > SparseNeighborhoodIteratorType;
+  typedef itk::NeighborhoodIterator< PixelMapImageType > SparseNeighborhoodIteratorType;
 
   // Create image
   PixelType value = 123;
-  SparseImageType::Pointer image = SparseImageType::New();
-  SparseImageType::IndexType start;
+  PixelMapImageType::Pointer image = PixelMapImageType::New();
+  PixelMapImageType::IndexType start;
   start.Fill( 0 );
-  SparseImageType::SizeType size;
+  PixelMapImageType::SizeType size;
   size.Fill( 1000000 ); // try this with a "normal" image!
-  SparseImageType::RegionType region( start, size );
+  PixelMapImageType::RegionType region( start, size );
   image->SetRegions( region );
   image->Allocate( );
   image->FillBuffer( value );
 
   // Create a sub region for operations
-  SparseImageType::IndexType substart;
+  PixelMapImageType::IndexType substart;
   substart.Fill( 100 );
-  SparseImageType::SizeType subsize;
+  PixelMapImageType::SizeType subsize;
   subsize.Fill( 100 );
-  SparseImageType::RegionType subregion;
+  PixelMapImageType::RegionType subregion;
   subregion.SetSize( subsize );
   subregion.SetIndex( substart );
 
   // Test Get/SetPixel
-  SparseImageType::IndexType index0;
+  PixelMapImageType::IndexType index0;
   index0.Fill( 100 );
   image->SetPixel( index0, 5 );
   PixelType pixel0 = image->GetPixel( index0 );
@@ -69,18 +69,18 @@ int main(int argc, char * argv [])
   pixel0 = image->GetPixel( index0 );
   assert( pixel0 == value );
 
-  SparseImageType::IndexType index1;
+  PixelMapImageType::IndexType index1;
   index1.Fill( 15 );
   PixelType pixel1 = image->GetPixel( index1 );
   assert( pixel1 == value );
 
   // Test using filter
-  typedef itk::ShiftScaleImageFilter<SparseImageType, SparseImageType>
+  typedef itk::ShiftScaleImageFilter<PixelMapImageType, PixelMapImageType>
     ShiftScaleFilterType;
   ShiftScaleFilterType::Pointer filter = ShiftScaleFilterType::New();
   filter->SetInput( image );
   filter->SetShift( 10 );
-  SparseImageType::Pointer output = filter->GetOutput();
+  PixelMapImageType::Pointer output = filter->GetOutput();
   output->SetRequestedRegion( subregion );
   output->FillBuffer( 0 );
   filter->SetNumberOfThreads( 1 ); // IMPORTANT!!!
@@ -97,7 +97,7 @@ int main(int argc, char * argv [])
     }
 
   // Test const iterator
-  SparseImageType::IndexType substart1;
+  PixelMapImageType::IndexType substart1;
   substart1.Fill( 50 );
   subregion.SetIndex( substart1 );
   SparseIteratorType it( output, subregion );
@@ -105,7 +105,7 @@ int main(int argc, char * argv [])
 
   while( !it.IsAtEnd() )
     {
-    SparseImageType::IndexType index = it.GetIndex();
+    PixelMapImageType::IndexType index = it.GetIndex();
     if ( index[0] >= 100 && index[1] >= 100 )
       {
       assert( it.Get() == (value + 10) );
@@ -117,7 +117,7 @@ int main(int argc, char * argv [])
     ++it;
     }
 
-  SparseImageType::SizeType radius;
+  PixelMapImageType::SizeType radius;
   radius.Fill( 1 );
   SparseNeighborhoodIteratorType nit( radius, output, subregion );
   nit.GoToBegin();
@@ -145,7 +145,7 @@ int main(int argc, char * argv [])
   it.GoToBegin();
   while( !it.IsAtEnd() )
     {
-    SparseImageType::IndexType index = it.GetIndex();
+    PixelMapImageType::IndexType index = it.GetIndex();
     if ( index[0] >= 100 && index[1] >= 100 )
       {
       assert( it.Get() == ((value+11) * 10) );
@@ -159,11 +159,11 @@ int main(int argc, char * argv [])
 
   // Test fill buffer
   image->FillBuffer( 100 );
-  SparseImageType::IndexType indexA;
+  PixelMapImageType::IndexType indexA;
   indexA.Fill( 100 );
   PixelType pixelA = image->GetPixel( indexA );
   assert( pixelA == 100 );
-  SparseImageType::IndexType indexB;
+  PixelMapImageType::IndexType indexB;
   indexB.Fill( 10000 );
   image->SetPixel( indexB, 5 );
   PixelType pixelB = image->GetPixel( indexB );

@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSparseImageNeighborhoodAccessorFunctor.h,v $
+  Module:    $RCSfile: itkPixelMapImageNeighborhoodAccessorFunctor.h,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -14,8 +14,8 @@
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkSparseImageNeighborhoodAccessorFunctor_h
-#define __itkSparseImageNeighborhoodAccessorFunctor_h
+#ifndef __itkPixelMapImageNeighborhoodAccessorFunctor_h
+#define __itkPixelMapImageNeighborhoodAccessorFunctor_h
 
 #include "itkImageBoundaryCondition.h"
 #include "itkNeighborhood.h"
@@ -25,7 +25,7 @@
 namespace itk
 {
 
-/** \class SparseImageNeighborhoodAccessorFunctor
+/** \class PixelMapImageNeighborhoodAccessorFunctor
  * \brief Provides accessor interfaces to Access pixels and is meant to be
  * used on pointers to pixels held by the Neighborhood class.
  *
@@ -39,7 +39,7 @@ namespace itk
  *
  */
 template< class TImage >
-class SparseImageNeighborhoodAccessorFunctor
+class PixelMapImageNeighborhoodAccessorFunctor
 {
 public:
   typedef TImage                                           ImageType;
@@ -52,19 +52,19 @@ public:
   typedef Neighborhood< InternalPixelType *,
           ::itk::GetImageDimension< TImage >::ImageDimension> NeighborhoodType;
 
-  typedef ImageBoundaryCondition< ImageType > const 
+  typedef ImageBoundaryCondition< ImageType > const
                           *ImageBoundaryConditionConstPointerType;
 
-  SparseImageNeighborhoodAccessorFunctor( PixelMapType* map, PixelType fillBufferValue )
+  PixelMapImageNeighborhoodAccessorFunctor( PixelMapType* map, PixelType fillBufferValue )
       : m_PixelMap( map ), m_FillBufferValue( fillBufferValue ) { };
-  SparseImageNeighborhoodAccessorFunctor()
+  PixelMapImageNeighborhoodAccessorFunctor()
     : m_PixelMap( NULL ), m_FillBufferValue( NumericTraits<PixelType>::Zero ) {};
 
   /** Set the pointer index to the start of the buffer.
    * This must be set by the iterators to the starting location of the buffer.
    * Typically a neighborhood iterator iterating on a neighborhood of an Image,
    * say \c image will set this in its constructor. For instance:
-   * 
+   *
    * \code
    * ConstNeighborhoodIterator( radius, image, )
    *   {
@@ -76,10 +76,10 @@ public:
   inline void SetBegin( const InternalPixelType * begin )  // NOTE: begin is always 0
     { this->m_Begin = const_cast< InternalPixelType * >( begin ); }
 
-  /** Method to dereference a pixel pointer. This is used from the 
+  /** Method to dereference a pixel pointer. This is used from the
    * ConstNeighborhoodIterator as the equivalent operation to (*it).
-   * This method should be preferred over the former (*it) notation. 
-   * The reason is that dereferencing a pointer to a location of 
+   * This method should be preferred over the former (*it) notation.
+   * The reason is that dereferencing a pointer to a location of
    * VectorImage pixel involves a different operation that simply
    * dereferencing the pointer. Here a PixelType (array of InternalPixelType s)
    * is created on the stack and returned.  */

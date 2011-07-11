@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSparseImagePixelAccessorFunctor.h,v $
+  Module:    $RCSfile: itkPixelMapImagePixelAccessorFunctor.h,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -9,25 +9,25 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkSparseImagePixelAccessorFunctor_h
-#define __itkSparseImagePixelAccessorFunctor_h
+#ifndef __itkPixelMapImagePixelAccessorFunctor_h
+#define __itkPixelMapImagePixelAccessorFunctor_h
 
 namespace itk
 {
-/** \class SparseImagePixelAccessorFunctor
+/** \class PixelMapImagePixelAccessorFunctor
  * \brief Provides accessor interfaces to Access pixels and is meant to be
  * used by iterators.
  *
  * A typical user should not need to use this class. The class is internally
  * used by the neighborhood iterators.
  *
- * The pixel accessor is set with the SetPixelAccessor method. This accessor is 
- * meant to be used only for SparseImage and not for Image.
+ * The pixel accessor is set with the SetPixelAccessor method. This accessor is
+ * meant to be used only for PixelMapImage and not for Image.
  *
  * \sa DefaultSliceContiguousPixelAccessor
  * \sa DefaultPixelAccessor
@@ -40,21 +40,21 @@ namespace itk
  *
  */
 template <class TImageType >
-class ITK_EXPORT SparseImagePixelAccessorFunctor
+class ITK_EXPORT PixelMapImagePixelAccessorFunctor
 {
 public:
 
   typedef TImageType                                   ImageType;
   typedef typename ImageType::InternalPixelType        InternalPixelType;
   typedef typename ImageType::PixelType                ExternalPixelType;
-  typedef typename ImageType::AccessorType             PixelAccessorType;
+  typedef typename ImageType::AccessorType             PixelMapImage;
   typedef unsigned int                                 VectorLengthType;
-  
+
   /** Set the PixelAccessor. This is set at construction time by the image iterators.
-   * The type PixelAccessorType is obtained from the ImageType over which the iterators
+   * The type PixelMapImage is obtained from the ImageType over which the iterators
    * are templated.
    * */
-  inline void SetPixelAccessor( PixelAccessorType& accessor ) 
+  inline void SetPixelAccessor( PixelMapImage& accessor )
     {
     m_PixelAccessor = accessor;
     }
@@ -87,7 +87,7 @@ public:
     }
 
 private:
-  PixelAccessorType m_PixelAccessor; // The pixel accessor
+  PixelMapImage m_PixelAccessor; // The pixel accessor
   InternalPixelType *m_Begin; // Begin of the buffer, always 0
 };
 

@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSparseImagePixelAccessor.h,v $
+  Module:    $RCSfile: itkPixelMapImagePixelAccessor.h,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -14,22 +14,22 @@
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkSparseImagePixelAccessor_h
-#define __itkSparseImagePixelAccessor_h
+#ifndef __itkPixelMapImagePixelAccessor_h
+#define __itkPixelMapImagePixelAccessor_h
 
 #include "itkMacro.h"
 
 namespace itk
 {
 
-/** \class SparseImagePixelAccessor
+/** \class PixelMapImagePixelAccessor
  * \brief Give access to partial aspects of a type
  *
- * SparseImagePixelAccessor is specifically meant to provide SparseImage
+ * PixelMapImagePixelAccessor is specifically meant to provide PixelMapImage
  * with the same \c DefaultPixelAccessor interface that
  * DefaultPixelAccessor provides to Image.
  *
- * SparseImagePixelAccessor is templated over an internal type and an
+ * PixelMapImagePixelAccessor is templated over an internal type and an
  * external type representation. This class encapsulates a
  * customized convertion between the internal and external
  * type representations.
@@ -41,7 +41,7 @@ namespace itk
  *
  */
 template <class TType, class TPixelMapType>
-class ITK_EXPORT SparseImagePixelAccessor
+class ITK_EXPORT PixelMapImagePixelAccessor
 {
 public:
 
@@ -76,16 +76,16 @@ public:
       }
     }
 
-  SparseImagePixelAccessor() {}
+  PixelMapImagePixelAccessor() {}
 
    /** Constructor to initialize slices and image size at construction time */
-   SparseImagePixelAccessor( PixelMapType* pixelMap, TType fillBufferValue )
+   PixelMapImagePixelAccessor( PixelMapType* pixelMap, TType fillBufferValue )
      {
      m_PixelMap = pixelMap;
      m_FillBufferValue = fillBufferValue;
      }
 
-  virtual ~SparseImagePixelAccessor() {};
+  virtual ~PixelMapImagePixelAccessor() {};
 
 private:
   PixelMapType* m_PixelMap;

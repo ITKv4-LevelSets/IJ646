@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSparseImage.txx,v $
+  Module:    $RCSfile: itkPixelMapImage.txx,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -12,23 +12,23 @@
   Portions of this code are covered under the VTK copyright.
   See VTKCopyright.txt or http://www.kitware.com/VTKCopyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef _itkSparseImage_txx
-#define _itkSparseImage_txx
+#ifndef _itkPixelMapImage_txx
+#define _itkPixelMapImage_txx
 
-#include "itkSparseImage.h"
+#include "itkPixelMapImage.h"
 #include "itkProcessObject.h"
 
 namespace itk
 {
 
 template<class TPixel, unsigned int VImageDimension>
-SparseImage<TPixel, VImageDimension>
-::SparseImage()
+PixelMapImage<TPixel, VImageDimension>
+::PixelMapImage()
 {
   m_Container = PixelContainer::New();
 }
@@ -36,7 +36,7 @@ SparseImage<TPixel, VImageDimension>
 
 template<class TPixel, unsigned int VImageDimension>
 void
-SparseImage<TPixel, VImageDimension>
+PixelMapImage<TPixel, VImageDimension>
 ::Allocate()
 {
   this->ComputeOffsetTable();
@@ -46,7 +46,7 @@ SparseImage<TPixel, VImageDimension>
 
 template<class TPixel, unsigned int VImageDimension>
 void
-SparseImage<TPixel, VImageDimension>
+PixelMapImage<TPixel, VImageDimension>
 ::Initialize()
 {
   //
@@ -66,7 +66,7 @@ SparseImage<TPixel, VImageDimension>
 
 template<class TPixel, unsigned int VImageDimension>
 void
-SparseImage<TPixel, VImageDimension>
+PixelMapImage<TPixel, VImageDimension>
 ::FillBuffer(const PixelType& value)
 {
   m_FillBufferValue = value;
@@ -76,7 +76,7 @@ SparseImage<TPixel, VImageDimension>
 
 template<class TPixel, unsigned int VImageDimension>
 void
-SparseImage<TPixel, VImageDimension>
+PixelMapImage<TPixel, VImageDimension>
 ::SetPixelContainer(PixelContainer *container)
 {
    if (m_Container != container)
@@ -89,7 +89,7 @@ SparseImage<TPixel, VImageDimension>
 
 template<class TPixel, unsigned int VImageDimension>
 void
-SparseImage<TPixel, VImageDimension>
+PixelMapImage<TPixel, VImageDimension>
 ::Graft(const DataObject *data)
 {
   // call the superclass' implementation
@@ -116,7 +116,7 @@ SparseImage<TPixel, VImageDimension>
       this->SetPixelContainer( const_cast< PixelContainer *>
                                     (imgData->GetPixelContainer()) );
       }
-    else 
+    else
       {
       // pointer could not be cast back down
       itkExceptionMacro( << "itk::SliceContiguousImage::Graft() cannot cast "
@@ -129,7 +129,7 @@ SparseImage<TPixel, VImageDimension>
 
 template<class TPixel, unsigned int VImageDimension>
 void
-SparseImage<TPixel, VImageDimension>
+PixelMapImage<TPixel, VImageDimension>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);

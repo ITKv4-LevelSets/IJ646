@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -22,7 +22,7 @@
 #include <sstream>
 
 #include "itkImage.h"
-#include "itkSparseImage.h"
+#include "itkPixelMapImage.h"
 #include "itkSliceContiguousImage.h"
 #include "itkSingleBitBinaryImage.h"
 #include "itkImageRegionIterator.h"
@@ -38,11 +38,11 @@ int main(int argc, char * argv [])
     typedef unsigned char PixelType;
     typedef itk::Image< PixelType, Dimension > ContiguousImageType;
     typedef itk::Image< PixelType, SliceDimension > SliceImageType;
-    typedef itk::SparseImage< PixelType, Dimension > SparseImageType;
+    typedef itk::PixelMapImage< PixelType, Dimension > PixelMapImageType;
     typedef itk::SliceContiguousImage< PixelType > SliceContiguousImageType;
     typedef itk::SingleBitBinaryImage< Dimension > BinaryImageType;
     typedef itk::ImageRegionIterator< ContiguousImageType > ContiguousIteratorType;
-    typedef itk::ImageRegionIterator< SparseImageType > SparseIteratorType;
+    typedef itk::ImageRegionIterator< PixelMapImageType > SparseIteratorType;
     typedef itk::ImageRegionIterator< ContiguousImageType > ContiguousIteratorType;
     typedef itk::ImageRegionIterator< SliceContiguousImageType > SliceContiguousIteratorType;
     typedef itk::ImageRegionIterator< BinaryImageType > BinaryIteratorType;
@@ -165,7 +165,7 @@ int main(int argc, char * argv [])
     // Time sparse image
     for (count = 0; count < Iterations; count++)
       {
-      SparseImageType::Pointer imageSparse = SparseImageType::New();
+      PixelMapImageType::Pointer imageSparse = PixelMapImageType::New();
       imageSparse->SetRegions( region );
       probeAllocate2.Start();
       imageSparse->Allocate( );
@@ -234,8 +234,8 @@ int main(int argc, char * argv [])
     }
   catch (itk::ExceptionObject & err)
     {
-    std::cerr << "ExceptionObject caught !" << std::endl; 
-    std::cerr << err << std::endl; 
+    std::cerr << "ExceptionObject caught !" << std::endl;
+    std::cerr << err << std::endl;
     return EXIT_FAILURE;
     }
 }

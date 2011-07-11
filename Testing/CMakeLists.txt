@@ -1,6 +1,6 @@
 set( TEST_SOURCES
   SliceContiguousImageTest01
-  SparseImageTest01
+  PixelMapImageTest01
   SingleBitBinaryImageTest01
 )
 

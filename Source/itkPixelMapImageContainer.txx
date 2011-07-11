@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSparseImageContainer.txx,v $
+  Module:    $RCSfile: itkPixelMapImageContainer.txx,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -12,30 +12,30 @@
   Portions of this code are covered under the VTK copyright.
   See VTKCopyright.txt or http://www.kitware.com/VTKCopyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef _itkSparseImageContainer_txx
-#define _itkSparseImageContainer_txx
+#ifndef _itkPixelMapImageContainer_txx
+#define _itkPixelMapImageContainer_txx
 
-#include "itkSparseImageContainer.h"
+#include "itkPixelMapImageContainer.h"
 
 namespace itk
 {
 
 template <typename TElementIdentifier, typename TElement>
-SparseImageContainer<TElementIdentifier , TElement>
-::SparseImageContainer()
+PixelMapImageContainer<TElementIdentifier , TElement>
+::PixelMapImageContainer()
 {
   m_ContainerManageMemory = true;
 }
 
 
 template <typename TElementIdentifier, typename TElement>
-SparseImageContainer< TElementIdentifier , TElement >
-::~SparseImageContainer()
+PixelMapImageContainer< TElementIdentifier , TElement >
+::~PixelMapImageContainer()
 {
   if( m_ContainerManageMemory )
     {
@@ -50,7 +50,7 @@ SparseImageContainer< TElementIdentifier , TElement >
  */
 template <typename TElementIdentifier, typename TElement>
 void
-SparseImageContainer< TElementIdentifier , TElement >
+PixelMapImageContainer< TElementIdentifier , TElement >
 ::Reserve(void)
 {
   // Nothing to do, a map can not reserve elements
@@ -63,7 +63,7 @@ SparseImageContainer< TElementIdentifier , TElement >
  */
 template <typename TElementIdentifier, typename TElement>
 void
-SparseImageContainer< TElementIdentifier , TElement >
+PixelMapImageContainer< TElementIdentifier , TElement >
 ::Squeeze(void)
 {
   // Nothing to do, a map can not be squeezed
@@ -75,7 +75,7 @@ SparseImageContainer< TElementIdentifier , TElement >
  */
 template <typename TElementIdentifier, typename TElement>
 void
-SparseImageContainer< TElementIdentifier , TElement >
+PixelMapImageContainer< TElementIdentifier , TElement >
 ::Initialize(void)
 {
   if ( m_PixelMap.size() > 0 )
@@ -92,7 +92,7 @@ SparseImageContainer< TElementIdentifier , TElement >
 
 template <typename TElementIdentifier, typename TElement>
 void
-SparseImageContainer< TElementIdentifier , TElement >
+PixelMapImageContainer< TElementIdentifier , TElement >
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);

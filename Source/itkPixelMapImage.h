@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSparseImage.h,v $
+  Module:    $RCSfile: itkPixelMapImage.h,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -14,15 +14,15 @@
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkSparseImage_h
-#define __itkSparseImage_h
+#ifndef __itkPixelMapImage_h
+#define __itkPixelMapImage_h
 
 #include "itkImageBase.h"
 #include "itkImageRegion.h"
-#include "itkSparseImageContainer.h"
-#include "itkSparseImagePixelAccessor.h"
-#include "itkSparseImagePixelAccessorFunctor.h"
-#include "itkSparseImageNeighborhoodAccessorFunctor.h"
+#include "itkPixelMapImageContainer.h"
+#include "itkPixelMapImagePixelAccessor.h"
+#include "itkPixelMapImagePixelAccessorFunctor.h"
+#include "itkPixelMapImageNeighborhoodAccessorFunctor.h"
 #include "itkNeighborhoodAccessorFunctor.h"
 #include "itkPoint.h"
 #include "itkContinuousIndex.h"
@@ -31,7 +31,7 @@
 namespace itk
 {
 
-/** \class SparseImage
+/** \class PixelMapImage
  *  \brief An n-dimensional image with a sparse memory model.
  *
  * The elements for a normal itk::Image are stored in a single, contiguous
@@ -47,12 +47,12 @@ namespace itk
  *
  */
 template <class TPixel, unsigned int VImageDimension>
-class ITK_EXPORT SparseImage :
+class ITK_EXPORT PixelMapImage :
     public ImageBase< VImageDimension >
 {
 public:
   /** Standard class typedefs */
-  typedef SparseImage                  Self;
+  typedef PixelMapImage                Self;
   typedef ImageBase< VImageDimension > Superclass;
   typedef SmartPointer<Self>           Pointer;
   typedef SmartPointer<const Self>     ConstPointer;
@@ -62,7 +62,7 @@ public:
   itkNewMacro(Self);
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro(SparseImage, ImageBase);
+  itkTypeMacro(PixelMapImage, ImageBase);
 
   /** Pixel typedef support. */
   typedef TPixel PixelType;
@@ -80,9 +80,6 @@ public:
    * and dimension) when they need compile time access to the dimension of
    * the image. */
   itkStaticConstMacro( ImageDimension, unsigned int, VImageDimension );
-
-  /** Container used to store pixels in the image. */
-  typedef SparseImageContainer<unsigned long, InternalPixelType> PixelContainer;
 
   /** Index typedef support. An index is used to access pixel values. */
   typedef typename Superclass::IndexType IndexType;
@@ -107,23 +104,26 @@ public:
    * of the index (0,0). */
   typedef typename Superclass::PointType PointType;
 
+  /** Offset typedef (relative position between indices) */
+  typedef typename Superclass::OffsetValueType OffsetValueType;
+
+  /** Container used to store pixels in the image. */
+  typedef PixelMapImageContainer<unsigned long, InternalPixelType> PixelContainer;
+
   /** A pointer to the pixel container. */
   typedef typename PixelContainer::Pointer PixelContainerPointer;
   typedef typename PixelContainer::ConstPointer PixelContainerConstPointer;
 
-  /** Offset typedef (relative position between indices) */
-  typedef typename Superclass::OffsetValueType OffsetValueType;
-
   /** Accessor type that convert data between internal and external
    *  representations. */
-  typedef SparseImagePixelAccessor<
+  typedef PixelMapImagePixelAccessor<
     InternalPixelType, typename PixelContainer::PixelMapType > AccessorType;
 
   /** Tyepdef for the functor used to access pixels.*/
-  typedef SparseImagePixelAccessorFunctor< Self > AccessorFunctorType;
+  typedef PixelMapImagePixelAccessorFunctor< Self > AccessorFunctorType;
 
   /** Tyepdef for the functor used to access a neighborhood of pixel pointers.*/
-  typedef SparseImageNeighborhoodAccessorFunctor< Self >
+  typedef PixelMapImageNeighborhoodAccessorFunctor< Self >
     NeighborhoodAccessorFunctorType;
 
   /** Allocate the image memory. The size of the image must
@@ -317,12 +317,12 @@ public:
     }
 
 protected:
-  SparseImage();
+  PixelMapImage();
   void PrintSelf( std::ostream& os, Indent indent ) const;
-  virtual ~SparseImage() {};
+  virtual ~PixelMapImage() {};
 
 private:
-  SparseImage( const Self & ); // purposely not implementated
+  PixelMapImage( const Self & ); // purposely not implementated
   void operator=(const Self&); //purposely not implemented
 
   /** Memory for the map containing the pixel data. */
@@ -334,17 +334,17 @@ private:
 } // end namespace itk
 
 // Define instantiation macro for this template.
-#define ITK_TEMPLATE_SparseImage(_, EXPORT, x, y) namespace itk { \
-  _(2(class EXPORT SparseImage< ITK_TEMPLATE_2 x >)) \
-  namespace Templates { typedef SparseImage< ITK_TEMPLATE_2 x > SparseImage##y; } \
+#define ITK_TEMPLATE_PixelMapImage(_, EXPORT, x, y) namespace itk { \
+  _(2(class EXPORT PixelMapImage< ITK_TEMPLATE_2 x >)) \
+  namespace Templates { typedef PixelMapImage< ITK_TEMPLATE_2 x > PixelMapImage##y; } \
   }
 
 #if ITK_TEMPLATE_EXPLICIT
-# include "Templates/itkSparseImage+-.h"
+# include "Templates/itkPixelMapImage+-.h"
 #endif
 
 #if ITK_TEMPLATE_TXX
-# include "itkSparseImage.txx"
+# include "itkPixelMapImage.txx"
 #endif
 
 #endif

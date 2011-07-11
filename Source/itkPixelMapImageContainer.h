@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program:   Insight Segmentation & Registration Toolkit
-  Module:    $RCSfile: itkSparseImageContainer,v $
+  Module:    $RCSfile: itkPixelMapImageContainer,v $
   Language:  C++
   Date:      $Date$
   Version:   $Revision$
@@ -10,12 +10,12 @@
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
-#ifndef __itkSparseImageContainer_h
-#define __itkSparseImageContainer_h
+#ifndef __itkPixelMapImageContainer_h
+#define __itkPixelMapImageContainer_h
 
 #include "itkObject.h"
 #include "itkObjectFactory.h"
@@ -24,8 +24,8 @@
 namespace itk
 {
 
-/** \class SparseImageContainer
- *  \breif An image container for itk::SparseImage.
+/** \class PixelMapImageContainer
+ *  \breif An image container for itk::PixelMapImage.
  *
  * \author Dan Mueller, Philips Healthcare, PII Development
  *
@@ -35,11 +35,11 @@ namespace itk
  */
 
 template <typename TElementIdentifier, typename TElement>
-class SparseImageContainer:  public Object
+class PixelMapImageContainer:  public Object
 {
 public:
   /** Standard class typedefs. */
-  typedef SparseImageContainer Self;
+  typedef PixelMapImageContainer Self;
   typedef Object Superclass;
   typedef SmartPointer<Self> Pointer;
   typedef SmartPointer<const Self> ConstPointer;
@@ -53,7 +53,7 @@ public:
   itkNewMacro(Self);
 
   /** Standard part of every itk Object. */
-  itkTypeMacro(SparseImageContainer, Object);
+  itkTypeMacro(PixelMapImageContainer, Object);
 
   /** Get the pixel map containing the pixels. */
   PixelMapType* GetPixelMap()
@@ -90,8 +90,8 @@ public:
   itkBooleanMacro(ContainerManageMemory);
 
 protected:
-  SparseImageContainer();
-  virtual ~SparseImageContainer();
+  PixelMapImageContainer();
+  virtual ~PixelMapImageContainer();
 
   /** PrintSelf routine. Normally this is a protected internal method. It is
    * made public here so that Image can call this method.  Users should not
@@ -99,7 +99,7 @@ protected:
   void PrintSelf(std::ostream& os, Indent indent) const;
 
 private:
-  SparseImageContainer(const Self&); //purposely not implemented
+  PixelMapImageContainer(const Self&); //purposely not implemented
   void operator=(const Self&); //purposely not implemented
 
   PixelMapType         m_PixelMap;
@@ -110,17 +110,17 @@ private:
 } // end namespace itk
 
 // Define instantiation macro for this template.
-#define ITK_TEMPLATE_SparseImageContainer(_, EXPORT, x, y) namespace itk { \
-  _(2(class EXPORT SparseImageContainer< ITK_TEMPLATE_2 x >)) \
-  namespace Templates { typedef SparseImageContainer< ITK_TEMPLATE_2 x > SparseImageContainer##y; } \
+#define ITK_TEMPLATE_PixelMapImageContainer(_, EXPORT, x, y) namespace itk { \
+  _(2(class EXPORT PixelMapImageContainer< ITK_TEMPLATE_2 x >)) \
+  namespace Templates { typedef PixelMapImageContainer< ITK_TEMPLATE_2 x > PixelMapImageContainer##y; } \
   }
 
 #if ITK_TEMPLATE_EXPLICIT
-# include "Templates/SparseImageContainer+-.h"
+# include "Templates/PixelMapImageContainer+-.h"
 #endif
 
 #if ITK_TEMPLATE_TXX
-# include "itkSparseImageContainer.txx"
+# include "itkPixelMapImageContainer.txx"
 #endif
 
 #endif

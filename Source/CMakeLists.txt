@@ -2,14 +2,14 @@
 SET(HEADERS
   itkSingleBitBinaryImage.h
   itkSliceContiguousImage.h
-  itkSparseImage.h
+  itkPixelMapImage.h
 )
 
 # The implementation files
 SET(SOURCES
   itkSingleBitBinaryImage.txx
   itkSliceContiguousImage.txx
-  itkSparseImage.txx
+  itkPixelMapImage.txx
   perf01.cxx
 )
 
