@@ -87,8 +87,8 @@ public:
     }
 
 private:
-  PixelMapImage m_PixelAccessor; // The pixel accessor
-  InternalPixelType *m_Begin; // Begin of the buffer, always 0
+  PixelMapImage       m_PixelAccessor; // The pixel accessor
+  InternalPixelType*  m_Begin; // Begin of the buffer, always 0
 };
 
 }

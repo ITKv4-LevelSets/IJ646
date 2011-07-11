@@ -38,7 +38,6 @@ namespace itk
  *
  * This implementation was taken from the Insight Journal paper:
  * http://hdl.handle.net/10380/3068
- *
  */
 template <class TType, class TPixelMapType>
 class ITK_EXPORT PixelMapImagePixelAccessor
@@ -56,14 +55,19 @@ public:
   /** Typedef for pixel map. */
   typedef TPixelMapType PixelMapType;
 
+  typedef typename PixelMapType::key_type PixelMapIdentifierType;
+
   /** Set output using the value in input */
-  inline void Set(InternalType & output, const ExternalType & input, const unsigned long offset ) const
+  inline void Set(InternalType & output,
+                  const ExternalType & input,
+                  const PixelMapIdentifierType offset ) const
     {
     m_PixelMap->operator[](offset) = input;
     }
 
   /** Get the value from input */
-  inline ExternalType Get( const InternalType & begin, const unsigned long offset ) const
+  inline ExternalType Get( const InternalType & begin,
+                           const PixelMapIdentifierType offset ) const
     {
     typename PixelMapType::const_iterator it = m_PixelMap->find( offset );
     if ( it == m_PixelMap->end() )
@@ -85,7 +89,7 @@ public:
      m_FillBufferValue = fillBufferValue;
      }
 
-  virtual ~PixelMapImagePixelAccessor() {};
+  virtual ~PixelMapImagePixelAccessor() {}
 
 private:
   PixelMapType* m_PixelMap;

@@ -32,7 +32,7 @@ namespace itk
 {
 
 /** \class PixelMapImage
- *  \brief An n-dimensional image with a sparse memory model.
+ *  \brief An n-dimensional image with a PixelMap memory model.
  *
  * The elements for a normal itk::Image are stored in a single, contiguous
  * 1-D array. The elements for this image are stored in a hash table,
@@ -108,10 +108,10 @@ public:
   typedef typename Superclass::OffsetValueType OffsetValueType;
 
   /** Container used to store pixels in the image. */
-  typedef PixelMapImageContainer<unsigned long, InternalPixelType> PixelContainer;
+  typedef PixelMapImageContainer< OffsetValueType, InternalPixelType > PixelContainer;
 
   /** A pointer to the pixel container. */
-  typedef typename PixelContainer::Pointer PixelContainerPointer;
+  typedef typename PixelContainer::Pointer      PixelContainerPointer;
   typedef typename PixelContainer::ConstPointer PixelContainerConstPointer;
 
   /** Accessor type that convert data between internal and external
@@ -148,12 +148,12 @@ public:
     this->SetRequestedRegion(region);
     }
 
-  /** Buffered region has no meaning for sparse images.
+  /** Buffered region has no meaning for PixelMap images.
    *  This method does nothing.
    * \sa ImageRegion, SetLargestPossibleRegion(), SetRequestedRegion() */
   virtual void SetBufferedRegion(const RegionType &region) { }
 
-  /** Buffered region has no meaning for sparse images.
+  /** Buffered region has no meaning for PixelMap images.
    *  This method always returns the largest possible region.
    * \sa ImageRegion, SetLargestPossibleRegion(), SetRequestedRegion() */
   virtual const RegionType& GetBufferedRegion() const
@@ -250,7 +250,7 @@ public:
   PixelType& operator[](const IndexType &index) const
      { return this->GetPixel(index); }
 
-  /** Sparse images do not have buffer. This method always returns 0 */
+  /** PixelMap images do not have buffer. This method always returns 0 */
   InternalPixelType* GetBufferPointer()
     { return 0; }
   const InternalPixelType * GetBufferPointer() const
@@ -318,16 +318,18 @@ public:
 
 protected:
   PixelMapImage();
+  virtual ~PixelMapImage() {}
+
   void PrintSelf( std::ostream& os, Indent indent ) const;
-  virtual ~PixelMapImage() {};
+
+  /** Memory for the map containing the pixel data. */
+  PixelContainerPointer m_Container;
+  PixelType             m_FillBufferValue;
 
 private:
   PixelMapImage( const Self & ); // purposely not implementated
   void operator=(const Self&); //purposely not implemented
 
-  /** Memory for the map containing the pixel data. */
-  PixelContainerPointer m_Container;
-  PixelType m_FillBufferValue;
 };
 
 

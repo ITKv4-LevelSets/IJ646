@@ -125,9 +125,9 @@ public:
     }
 
 private:
-  PixelMapType* m_PixelMap;
-  PixelType m_FillBufferValue;
-  InternalPixelType *m_Begin;  // Begin of the buffer, always 0
+  PixelMapType*       m_PixelMap;
+  PixelType           m_FillBufferValue;
+  InternalPixelType*  m_Begin;  // Begin of the buffer, always 0
 };
 
 } // end namespace itk

@@ -19,6 +19,7 @@
 
 #include "itkObject.h"
 #include "itkObjectFactory.h"
+#include "itkIntTypes.h"
 #include <utility>
 
 namespace itk
@@ -33,7 +34,6 @@ namespace itk
  * http://hdl.handle.net/10380/3068
  *
  */
-
 template <typename TElementIdentifier, typename TElement>
 class PixelMapImageContainer:  public Object
 {
@@ -60,8 +60,8 @@ public:
     { return &m_PixelMap; }
 
   /** Get the number of elements currently stored in the container. */
-  unsigned long Size(void) const
-    { return (unsigned long) m_PixelMap.size(); };
+  IdentifierType Size(void) const
+    { return static_cast< IdentifierType >( m_PixelMap.size() ); }
 
   /** Sparse image containers can not reserve memory in advance.
    *  This method does nothing.
