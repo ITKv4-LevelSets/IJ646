@@ -1,18 +1,15 @@
+set( TEST_SOURCES
+  SliceContiguousImageTest01
+  SparseImageTest01
+  SingleBitBinaryImageTest01
+)
+
 #
 # Configure the Executables
 #
-ADD_EXECUTABLE( SliceContiguousImageTest01 SliceContiguousImageTest01.cxx )
-TARGET_LINK_LIBRARIES( SliceContiguousImageTest01 ITKCommon ITKIO )
+foreach( var ${TEST_SOURCES} )
+  add_executable( ${var} ${var}.cxx )
+  target_link_libraries( ${var} ${ITK_LIBRARIES} )
 
-ADD_EXECUTABLE( SparseImageTest01 SparseImageTest01.cxx )
-TARGET_LINK_LIBRARIES( SparseImageTest01 ITKCommon ITKIO )
-
-ADD_EXECUTABLE( SingleBitBinaryImageTest01 SingleBitBinaryImageTest01.cxx )
-TARGET_LINK_LIBRARIES( SingleBitBinaryImageTest01 ITKCommon ITKIO )
-
-#
-# Configure the Tests
-#
-ADD_TEST( SliceContiguousImageTest01 SliceContiguousImageTest01 test01 )
-ADD_TEST( SparseImageTest01 SparseImageTest01 test01 )
-ADD_TEST( SingleBitBinaryImageTest01 SingleBitBinaryImageTest01 test01 )
+  add_test( NAME ${var} COMMAND ${var} )
+endforeach()

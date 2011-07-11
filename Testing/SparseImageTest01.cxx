@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -21,20 +21,13 @@
 #include <iostream>
 #include <sstream>
 
-#include "itkTestMain.h"
-
 #include "itkImage.h"
 #include "itkSparseImage.h"
 #include "itkImageRegionIterator.h"
 #include "itkNeighborhoodIterator.h"
 #include "itkShiftScaleImageFilter.h"
 
-void RegisterTests()
-{
-  REGISTER_TEST(test01);
-}
-
-int test01(int argc, char * argv [])
+int main(int argc, char * argv [])
 {
   // Typedefs
   const unsigned int Dimension = 2;
@@ -99,7 +92,6 @@ int test01(int argc, char * argv [])
 
   while( !it1.IsAtEnd() )
     {
-    SparseImageType::IndexType index = it1.GetIndex();
     assert( it1.Get() == (value + 10) );
     ++it1;
     }
@@ -133,7 +125,6 @@ int test01(int argc, char * argv [])
 
   while( !nit.IsAtEnd() )
     {
-    SparseImageType::IndexType index = nit.GetIndex();
     PixelType p = nit.GetCenterPixel();
     PixelType p1 = nit.GetPixel( offset1 );
     if (p == p1)
@@ -168,10 +159,12 @@ int test01(int argc, char * argv [])
 
   // Test fill buffer
   image->FillBuffer( 100 );
-  SparseImageType::IndexType indexA = {100, 100};
+  SparseImageType::IndexType indexA;
+  indexA.Fill( 100 );
   PixelType pixelA = image->GetPixel( indexA );
   assert( pixelA == 100 );
-  SparseImageType::IndexType indexB = {10000, 10000};
+  SparseImageType::IndexType indexB;
+  indexB.Fill( 10000 );
   image->SetPixel( indexB, 5 );
   PixelType pixelB = image->GetPixel( indexB );
   assert( pixelB == 5 );

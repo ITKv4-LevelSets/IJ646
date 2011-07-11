@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -21,20 +21,13 @@
 #include <iostream>
 #include <sstream>
 
-#include "itkTestMain.h"
-
 #include "itkImage.h"
 #include "itkSingleBitBinaryImage.h"
 #include "itkImageRegionIterator.h"
 #include "itkNeighborhoodIterator.h"
 #include "itkInvertIntensityImageFilter.h"
 
-void RegisterTests()
-{
-  REGISTER_TEST(test01);
-}
-
-int test01(int argc, char * argv [])
+int main(int argc, char * argv [])
 {
   // Typedefs
   const unsigned int Dimension = 2;
