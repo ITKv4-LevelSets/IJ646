@@ -31,6 +31,7 @@ PixelMapImage<TPixel, VImageDimension>
 ::PixelMapImage()
 {
   m_Container = PixelContainer::New();
+  m_FillBufferValue = NumericTraits< PixelType >::Zero;
 }
 
 
@@ -79,11 +80,11 @@ void
 PixelMapImage<TPixel, VImageDimension>
 ::SetPixelContainer(PixelContainer *container)
 {
-   if (m_Container != container)
-     {
-     m_Container = container;
-     this->Modified();
-     }
+  if (m_Container != container)
+    {
+    m_Container = container;
+    this->Modified();
+    }
 }
 
 

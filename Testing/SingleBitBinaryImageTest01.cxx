@@ -91,7 +91,6 @@ int main(int argc, char * argv [])
 
   while( !it1.IsAtEnd() )
     {
-    BinaryImageType::IndexType index = it1.GetIndex();
     assert( it1.Get() != it.Get() );
     ++it1;
     ++it;
@@ -130,7 +129,6 @@ int main(int argc, char * argv [])
 
   while( !nit.IsAtEnd() )
     {
-    BinaryImageType::IndexType index = nit.GetIndex();
     PixelType p = nit.GetCenterPixel();
     PixelType p1 = nit.GetPixel( offset1 );
     if (p == p1)

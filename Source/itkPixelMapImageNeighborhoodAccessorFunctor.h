@@ -55,10 +55,18 @@ public:
   typedef ImageBoundaryCondition< ImageType > const
                           *ImageBoundaryConditionConstPointerType;
 
-  PixelMapImageNeighborhoodAccessorFunctor( PixelMapType* map, PixelType fillBufferValue )
-      : m_PixelMap( map ), m_FillBufferValue( fillBufferValue ) { };
+  PixelMapImageNeighborhoodAccessorFunctor( PixelMapType* map,
+                                            PixelType fillBufferValue )
+    : m_PixelMap( map ),
+      m_FillBufferValue( fillBufferValue ),
+      m_Begin( 0 )
+  {}
+
   PixelMapImageNeighborhoodAccessorFunctor()
-    : m_PixelMap( NULL ), m_FillBufferValue( NumericTraits<PixelType>::Zero ) {};
+    : m_PixelMap( NULL ),
+      m_FillBufferValue( NumericTraits<PixelType>::Zero ),
+      m_Begin( NULL )
+  {}
 
   /** Set the pointer index to the start of the buffer.
    * This must be set by the iterators to the starting location of the buffer.
@@ -85,7 +93,7 @@ public:
    * is created on the stack and returned.  */
   inline PixelType Get( const InternalPixelType *pixelPointer ) const
     {
-    unsigned long offset = pixelPointer  - m_Begin; // NOTE: begin is always 0
+    OffsetValueType offset = pixelPointer  - m_Begin; // NOTE: begin is always 0
     typename PixelMapType::const_iterator it = m_PixelMap->find( offset );
     if ( it == m_PixelMap->end() )
       {
@@ -93,14 +101,14 @@ public:
       }
     else
       {
-      return m_PixelMap->operator[](offset);
+      return it->second;
       }
     }
 
   /** Method to set the pixel value at a certain pixel pointer */
   inline void Set( InternalPixelType* &pixelPointer, const PixelType &p ) const
     {
-    unsigned long offset = pixelPointer - m_Begin; // NOTE: begin is always 0
+    OffsetValueType offset = pixelPointer - m_Begin; // NOTE: begin is always 0
     m_PixelMap->operator[](offset) = p;
     }
 

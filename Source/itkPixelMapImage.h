@@ -203,16 +203,17 @@ public:
    * pixel on the stack. */
   const PixelType& GetPixel(const IndexType &index) const
     {
-    typename PixelContainer::PixelMapType *map = m_Container->GetPixelMap();
+    typedef typename PixelContainer::PixelMapType PixelMapType;
+    PixelMapType *map = m_Container->GetPixelMap();
     OffsetValueType offset = this->ComputeOffset(index);
-    typename PixelContainer::PixelMapType::const_iterator it = map->find( offset );
+    typename PixelMapType::const_iterator it = map->find( offset );
     if ( it == map->end() )
       {
       return m_FillBufferValue;
       }
     else
       {
-      return map->operator[](offset);
+      return it->second;
       }
     }
 
@@ -222,16 +223,17 @@ public:
    * image has actually been allocated yet. */
   PixelType& GetPixel(const IndexType &index )
     {
-    typename PixelContainer::PixelMapType *map = m_Container->GetPixelMap();
+    typedef typename PixelContainer::PixelMapType PixelMapType;
+    PixelMapType *map = m_Container->GetPixelMap();
     OffsetValueType offset = this->ComputeOffset(index);
-    typename PixelContainer::PixelMapType::const_iterator it = map->find( offset );
+    typename PixelMapType::iterator it = map->find( offset );
     if ( it == map->end() )
       {
       return m_FillBufferValue;
       }
     else
       {
-      return map->operator[](offset);
+      return it->second;
       }
     }
 

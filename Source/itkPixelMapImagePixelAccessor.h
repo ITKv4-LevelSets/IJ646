@@ -18,6 +18,7 @@
 #define __itkPixelMapImagePixelAccessor_h
 
 #include "itkMacro.h"
+#include "itkNumericTraits.h"
 
 namespace itk
 {
@@ -76,24 +77,26 @@ public:
       }
     else
       {
-      return m_PixelMap->operator[](offset);
+      return it->second;
       }
     }
 
-  PixelMapImagePixelAccessor() {}
+  PixelMapImagePixelAccessor() :
+    m_PixelMap( NULL ),
+    m_FillBufferValue( NumericTraits< InternalType >::Zero )
+    {}
 
    /** Constructor to initialize slices and image size at construction time */
-   PixelMapImagePixelAccessor( PixelMapType* pixelMap, TType fillBufferValue )
-     {
-     m_PixelMap = pixelMap;
-     m_FillBufferValue = fillBufferValue;
-     }
+   PixelMapImagePixelAccessor( PixelMapType* pixelMap,
+                               TType fillBufferValue ) :
+     m_PixelMap( pixelMap ), m_FillBufferValue( fillBufferValue )
+     {}
 
   virtual ~PixelMapImagePixelAccessor() {}
 
 private:
   PixelMapType* m_PixelMap;
-  InternalType m_FillBufferValue;
+  InternalType  m_FillBufferValue;
 };
 
 } // end namespace itk

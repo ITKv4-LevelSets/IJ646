@@ -50,6 +50,10 @@ public:
   typedef typename ImageType::AccessorType             PixelMapImage;
   typedef unsigned int                                 VectorLengthType;
 
+  PixelMapImagePixelAccessorFunctor()
+    : m_Begin( NULL )
+  {}
+
   /** Set the PixelAccessor. This is set at construction time by the image iterators.
    * The type PixelMapImage is obtained from the ImageType over which the iterators
    * are templated.
