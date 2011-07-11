@@ -191,11 +191,20 @@ public:
    * allocated yet. */
   void SetPixel( const IndexType &index, const PixelType& value )
     {
+    typename PixelContainer::PixelMapType *map = m_Container->GetPixelMap();
+    OffsetValueType offset = this->ComputeOffset(index);
+
     if( value != m_FillBufferValue )
       {
-      typename PixelContainer::PixelMapType *map = m_Container->GetPixelMap();
-      OffsetValueType offset = this->ComputeOffset(index);
       map->operator[](offset) = value;
+      }
+    else
+      {
+      typename PixelContainer::PixelMapType::iterator it = map->find( offset );
+      if( it != map->end() )
+        {
+        map->erase( it );
+        }
       }
     }
 
