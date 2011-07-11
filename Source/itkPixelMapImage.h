@@ -189,11 +189,14 @@ public:
    * Allocate() needs to have been called first -- for efficiency,
    * this function does not check that the image has actually been
    * allocated yet. */
-   void SetPixel( const IndexType &index, const PixelType& value )
+  void SetPixel( const IndexType &index, const PixelType& value )
     {
-    typename PixelContainer::PixelMapType *map = m_Container->GetPixelMap();
-    OffsetValueType offset = this->ComputeOffset(index);
-    map->operator[](offset) = value;
+    if( value != m_FillBufferValue )
+      {
+      typename PixelContainer::PixelMapType *map = m_Container->GetPixelMap();
+      OffsetValueType offset = this->ComputeOffset(index);
+      map->operator[](offset) = value;
+      }
     }
 
   /** \brief Get a pixel (read only version).
